@@ -9,16 +9,14 @@ describe 'mute', ->
     @robot =
       respond: sinon.spy()
       hear: sinon.spy()
+      listeners: []
 
     require('../src/hubot-mute')(@robot)
 
   it 'registers a respond listener for "mute list"', ->
-  	expect(@robot.respond).to.have.been.calledWith(/mute list/)
+  	expect(@robot.respond).to.have.been.calledWith(/mute list$/i)
 
-  it 'registers a respond listener for "mute"', ->
-    expect(@robot.respond).to.have.been.calledWith(/mute/)
-  it 'registers a respond listener for "unmute channel"', ->
-    expect(@robot.respond).to.have.been.calledWith(/unmute channel/)
-
-  it 'registers a respond listener for "mute all"', ->
-    expect(@robot.respond).to.have.been.calledWith(/mute all/)
+  it 'registers a respond listener for "mute|unmute (all|channel)"', ->
+    expect(@robot.respond).to.have.been.calledWith(/(mute|unmute) (all|[\#]?[\S]+)$/i)
+  it 'registers a respond listener for "mute|unmute"', ->
+    expect(@robot.respond).to.have.been.calledWith(/(mute|unmute)$/i)
