@@ -1,0 +1,38 @@
+{
+  "name": "hubot-mute",
+  "description": "Allows channels to mute hubot (prevent him from responding to any other commands) if quiet is required",
+  "version": "0.0.1",
+  "author": "Alex House <housealexander@gmail.com>",
+  "license": "MIT",
+
+  "keywords": [
+    "hubot",
+    "hubot-scripts"
+  ],
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alexhouse/hubot-mute.git"
+  },
+
+  "bugs": {
+    "url": "https://github.com/alexhouse/hubot-scripts/issues"
+  },
+
+  "dependencies": {
+    "coffee-script": "~1.6"
+  },
+
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "sinon-chai": "*",
+    "sinon": "*"
+  },
+
+  "main": "index.coffee",
+
+  "scripts": {
+    "test": "script/test"
+  }
+}
