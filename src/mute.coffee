@@ -62,7 +62,6 @@ module.exports = (robot) ->
       return
 
     reason = if mute_all is true then 'All channels muted' else "Channel #{process.env.HUBOT_MUTE_ROOM_PREFIX}#{msg.message.room} is muted"
-    console.log("#{reason}; suppressed: #{msg.match[1]}")
     msg.finish()
 
   mute_listener = robot.listeners.pop()
