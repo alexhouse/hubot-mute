@@ -12,11 +12,11 @@
 
   "repository": {
     "type": "git",
-    "url": "git://github.com/alexhouse/hubot-mute.git"
+    "url": "git://github.com/hubot-scripts/hubot-mute.git"
   },
 
   "bugs": {
-    "url": "https://github.com/alexhouse/hubot-scripts/issues"
+    "url": "https://github.com/hubot-scripts/hubot-mute/issues"
   },
 
   "dependencies": {
