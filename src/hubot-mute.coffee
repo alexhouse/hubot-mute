@@ -35,7 +35,7 @@ module.exports = (robot) ->
       for room in mute_channels
         msg.send room + ' is muted'
 
-  robot.response /global (mute|unmute)$/i, (msg) ->
+  robot.respond /global (mute|unmute)$/i, (msg) ->
     msg.finish()
     action = msg.match[1].toLowerCase()
     muteAll action, (what) ->
@@ -46,9 +46,9 @@ module.exports = (robot) ->
     msg.finish()
     channel = msg.match[2]
     action = msg.match[1].toLowerCase()
+    
     if channel == 'all'
       if action == 'mute'
-        # We don't provide mute all anymore (now global mute)
         msg.send 'Deprecated: Mute all channels now with `hubot global mute`'
         return
 
@@ -58,6 +58,7 @@ module.exports = (robot) ->
         msg.send 'Unmuted ' + count + ' channels'
       else
         msg.send 'No channels were muted, so nothing was done'
+
       return
 
     success = muteChannel action, channel, (what) ->
@@ -96,14 +97,11 @@ module.exports = (robot) ->
   robot.listeners.unshift(mute_listener)
 
 muteAll = (action, cb) ->
-  if action == 'mute'
-    mute_all = true
-  else
-    mute_all = false
+  mute_all = action == 'mute'
 
   cb 'All channels have been ' + action + 'd'
 
-muteChannel = (action, channel, cb, cbs) ->
+muteChannel = (action, channel, cb) ->
   action = action.toLowerCase()
   if process.env.HUBOT_MUTE_ROOM_PREFIX?
     if channel.indexOf(process.env.HUBOT_MUTE_ROOM_PREFIX) != 0
