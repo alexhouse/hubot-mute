@@ -1,7 +1,7 @@
 {
   "name": "hubot-mute",
   "description": "Allows channels to mute hubot (prevent him from responding to any other commands) if quiet is required",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "author": "Alex House <housealexander@gmail.com>",
   "license": "MIT",
 
