@@ -5,11 +5,13 @@
 #   None
 #
 # Configuration:
-#   HUBOT_MUTE_ROOM_PREFIX (# on Slack, IRC, etc, otherwise leave blank)
+#   HUBOT_MUTE_ROOM_PREFIX (# on Slack, IRC, etc, otherwise leave blank, but must be defined)
 #
 # Commands:
 #   hubot mute list - Check which channels have been muted
 #   hubot mute|unmute (channel name) - (un)mute a channel (if channel name omitted, mutes current channel)
+#   hubot unmute all - Unmute all individually muted channels
+#   hubot global mute|unmute - (Un)mute hubot everywhere
 #
 # Author:
 #   Alex House (@alexhouse)
@@ -33,14 +35,29 @@ module.exports = (robot) ->
       for room in mute_channels
         msg.send room + ' is muted'
 
+  robot.response /global (mute|unmute)$/i, (msg) ->
+    msg.finish()
+    action = msg.match[1].toLowerCase()
+    muteAll action, (what) ->
+      msg.send what
+
   re = new RegExp("(mute|unmute) (all|[\\" + process.env.HUBOT_MUTE_ROOM_PREFIX + "]?[\\S]+)$", "i")
   robot.respond re, (msg) ->
     msg.finish()
     channel = msg.match[2]
     action = msg.match[1].toLowerCase()
     if channel == 'all'
-      muteAll action, (what) ->
-        msg.send what
+      if action == 'mute'
+        # We don't provide mute all anymore (now global mute)
+        msg.send 'Deprecated: Mute all channels now with `hubot global mute`'
+        return
+
+      count = mute_channels.length
+      if count > 0
+        mute_channels = []
+        msg.send 'Unmuted ' + count + ' channels'
+      else
+        msg.send 'No channels were muted, so nothing was done'
       return
 
     success = muteChannel action, channel, (what) ->
@@ -79,7 +96,6 @@ module.exports = (robot) ->
   robot.listeners.unshift(mute_listener)
 
 muteAll = (action, cb) ->
-  action = action.toLowerCase()
   if action == 'mute'
     mute_all = true
   else
