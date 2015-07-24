@@ -14,12 +14,14 @@ describe 'mute', ->
     require('../src/hubot-mute')(@robot)
 
   it 'registers a respond listener for "mute list"', ->
-  	expect(@robot.respond).to.have.been.calledWith(/mute list$/i)
+    expect(@robot.respond).to.have.been.calledWith(/mute list$/i)
 
   it 'registers a respond listener for "mute|unmute (all|channel)"', ->
     expect(@robot.respond).to.have.been.calledWith(/(mute|unmute) (all|[\#]?[\S]+)$/i)
   it 'registers a respond listener for "mute|unmute"', ->
     expect(@robot.respond).to.have.been.calledWith(/(mute|unmute)$/i)
+  it 'registers a respond listener for "global mute|unmute"', ->
+    expect(@robot.respond).to.have.been.calledWith(/global (mute|unmute)$/i)
 
   it 'registers a catch all listener for ".*"', ->
     expect(@robot.hear).to.have.been.calledWith(/(.*)$/i)
