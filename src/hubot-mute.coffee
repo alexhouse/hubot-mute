@@ -23,6 +23,9 @@ mute_all = false
 mute_explain = {}
 
 module.exports = (robot) ->
+  mute_channels = robot.get('mute_channels') or []
+  mute_all = robot.get('mute_all') or false
+
   robot.respond /mute list$/i, (msg) ->
     msg.finish()
     if mute_channels.length is 0 and mute_all is false
@@ -99,6 +102,7 @@ module.exports = (robot) ->
 muteAll = (action, cb) ->
   mute_all = action == 'mute'
 
+  robot.brain.set 'mute_all', mute_all
   cb 'All channels have been ' + action + 'd'
 
 muteChannel = (action, channel, cb) ->
@@ -122,6 +126,7 @@ muteChannel = (action, channel, cb) ->
 
     mute_channels.splice idx, 1
 
+  robot.brain.set 'mute_channels', mute_channels
   cb 'Channel ' + channel + ' ' + action + 'd'
   return true
 
