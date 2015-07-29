@@ -21,10 +21,14 @@ mute_channels = []
 mute_listener = null
 mute_all = false
 mute_explain = {}
+mute_first = true;
 
 module.exports = (robot) ->
-  robot.brain && mute_channels = robot.brain.get('mute_channels') or []
-  robot.brain && mute_all = robot.brain.get('mute_all') or false
+  robot.brain.on 'loaded', ->
+    if mute_first
+      mute_first = false
+      mute_channels = robot.brain.get('mute_channels') or []
+      mute_all = robot.brain.get('mute_all') or false
 
   robot.respond /mute list$/i, (msg) ->
     msg.finish()
