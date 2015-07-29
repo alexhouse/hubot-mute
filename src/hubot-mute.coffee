@@ -23,8 +23,8 @@ mute_all = false
 mute_explain = {}
 
 module.exports = (robot) ->
-  mute_channels = robot.brain.get('mute_channels') or []
-  mute_all = robot.brain.get('mute_all') or false
+  robot.brain && mute_channels = robot.brain.get('mute_channels') or []
+  robot.brain && mute_all = robot.brain.get('mute_all') or false
 
   robot.respond /mute list$/i, (msg) ->
     msg.finish()
