@@ -82,7 +82,7 @@ module.exports = (robot) ->
       msg.send what
 
   # Catch-all listener to mute responses
-  robot.hear /(.*)$/i, (msg) ->
+  robot.hear /(.*)$/i, {id: "hubot-mute.catch_all"}, (msg) ->
     if mute_all is false and mute_channels.indexOf(process.env.HUBOT_MUTE_ROOM_PREFIX + msg.message.room) == -1
       return
     if msg.match[1].indexOf('mute') != -1
